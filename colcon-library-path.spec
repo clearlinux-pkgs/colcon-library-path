@@ -4,7 +4,7 @@
 #
 Name     : colcon-library-path
 Version  : 0.2.0
-Release  : 2
+Release  : 3
 URL      : https://files.pythonhosted.org/packages/5e/3d/b9778bdb0150e4202a476f707db740adf7d080010fceeb66235bf9ad4acf/colcon-library-path-0.2.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/5e/3d/b9778bdb0150e4202a476f707db740adf7d080010fceeb66235bf9ad4acf/colcon-library-path-0.2.0.tar.gz
 Summary  : Extension for colcon adding an environment variable to find libraries.
