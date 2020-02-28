@@ -4,7 +4,7 @@
 #
 Name     : colcon-library-path
 Version  : 0.2.1
-Release  : 8
+Release  : 9
 URL      : https://files.pythonhosted.org/packages/7a/72/1427af79ac1265103b58ff6fbacd75d325f590ec0e3c1c98027ebd1fff12/colcon-library-path-0.2.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/7a/72/1427af79ac1265103b58ff6fbacd75d325f590ec0e3c1c98027ebd1fff12/colcon-library-path-0.2.1.tar.gz
 Summary  : Extension for colcon adding an environment variable to find libraries.
@@ -14,10 +14,12 @@ Requires: colcon-library-path-python = %{version}-%{release}
 Requires: colcon-library-path-python3 = %{version}-%{release}
 Requires: colcon-core
 BuildRequires : buildreq-distutils3
+BuildRequires : colcon-core
 
 %description
 colcon-library-path
 ===================
+
 An extension for `colcon-core <https://github.com/colcon/colcon-core>`_ to set an environment variable to find shared libraries at runtime.
 
 %package python
@@ -33,6 +35,7 @@ python components for the colcon-library-path package.
 Summary: python3 components for the colcon-library-path package.
 Group: Default
 Requires: python3-core
+Provides: pypi(colcon-library-path)
 
 %description python3
 python3 components for the colcon-library-path package.
@@ -40,17 +43,25 @@ python3 components for the colcon-library-path package.
 
 %prep
 %setup -q -n colcon-library-path-0.2.1
+cd %{_builddir}/colcon-library-path-0.2.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1547690351
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582909522
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
